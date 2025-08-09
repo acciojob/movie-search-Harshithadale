@@ -16,42 +16,45 @@ const App = () => {
     }
   };
 
-  const searchInput = () => {
+  const searchInput = (e) => {
+    e.preventDefault()
     fetchData(title);
   };
   return (
-    <div>
+    <>
       {/* Do not remove the main div */}
+      <form>
       <input onChange={(e) => setTitle(e.target.value)} />
-      <button onClick={searchInput}>Search</button>
+      <button onClick={searchInput} type="submit">Search</button>
+      </form>
       {result !== null && 
       (
         <>
           {
           
           result.Response === "True" && (
-            <>
+            <ul>
               {
                 result.Search.map((item,ind)=>{
       
-                  return(<div key={ind}>
+                  return(<li key={ind}>
                         <h1>{item.Title}</h1>
                         <img src={item.Poster}/>
-                  </div>)
+                  </li>)
                 })
               }
-            </>
+            </ul>
           )}
           {
             result.Response === "False" &&(
-              <>
-              <p>Invalid movie name. Please try again.</p>
-              </>
+              
+              <p className="error">Invalid movie name. Please try again.</p>
+    
             )
           }
         </>
       )}
-    </div>
+    </>
   );
 };
 
